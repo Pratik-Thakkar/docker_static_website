@@ -1,0 +1,10 @@
+mkdocs
+pygments
+mkdocs-alabaster
+mkdocs-cinder
+mkdocs-material
+mkdocs-psinder
+mkdocs-bootswatch
+mkdocs-bootstrap
+mkdocs-windmill
+mkdocs-windmill-dark
