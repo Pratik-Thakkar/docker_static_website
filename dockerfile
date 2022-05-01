@@ -1,12 +1,17 @@
 FROM python:alpine3.15
 RUN apk add --no-cache python3 python3-dev py3-pip
 
-COPY requirements.txt .
+#COPY requirements.txt .
 
-RUN pip install -r requirements.txt && rm -rf $HOME/.cache/pip
+RUN pip install mkdocs pygments && rm -rf $HOME/.cache/pip
 
-WORKDIR /mkdocs
+WORKDIR /docs
+
+COPY mkdockerize.sh  /usr/local/bin/
+RUN chmod +x /usr/local/bin/mkdockerize.sh
+
+ENTRYPOINT [ "mkdockerize.sh" ]
 
 EXPOSE 8000
 
-CMD [ "mkdocs", "serve", "--dev-addr", "0.0.0.0:8000" ]
+CMD [ "help" ]
