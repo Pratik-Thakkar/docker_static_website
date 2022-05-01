@@ -49,7 +49,8 @@ case "$param" in
     mkdocs serve --livereload -a "0.0.0.0:8000"
     exit 0;;
   produce)
-    echo "In produce"
+    #echo "In produce"
+    mkdocs build -c -d /docs/output
     exit 0;;
   *)
     echo "Unexpected command: $param"
