@@ -45,7 +45,8 @@ done
 
 case "$param" in
   serve)
-    echo "In Serve"
+    #echo "In Serve"
+    mkdocs serve --livereload -a "0.0.0.0:8000"
     exit 0;;
   produce)
     echo "In produce"

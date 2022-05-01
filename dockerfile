@@ -1,5 +1,5 @@
 FROM python:alpine3.15
-RUN apk add --no-cache python3 python3-dev py3-pip
+RUN apk add --no-cache python3 python3-dev py3-pip bash
 
 #COPY requirements.txt .
 
