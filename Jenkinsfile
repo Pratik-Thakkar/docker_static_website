@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-         stage('Clone repository') { 
+        stage('Clone repository') { 
             steps { 
                 script{
                 checkout scm
@@ -9,22 +9,32 @@ pipeline {
             }
         }
 
-        stage('Build') { 
+        stage('Build docker image') { 
             steps { 
                 script{
-                 dockerImage = docker.build("pthakkar/mkdocs:latest")
+                 dockerImage = docker.build("pthakkar/mkdocs:${env.BUILD_ID}")
                 }
             }
         }
 
-        stage('Prodcue'){
+        stage('Build site'){
             steps {
-                 echo 'Empty'
+                agent {
+                    docker { 
+                        image 'pthakkar/mkdocs:${env.BUILD_ID}'
+                        args '-v env.WORKSPACE/mkdocs:/docs/src/ -v env.WORKSPACE/mkdocs/site:/docs/output/ produce' 
+                    }
+                }
             }
         }
-        stage('Serve') {
+        stage('Serve site') {
             steps {
-                echo 'Empty'
+                agent {
+                    docker { 
+                        image 'pthakkar/mkdocs:${env.BUILD_ID}'
+                        args '-v env.WORKSPACE/mkdocs/site:/docs/src/ -p 8000:8000 serve' 
+                    }
+                }
             }
         }
     }
