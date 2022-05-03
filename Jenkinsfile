@@ -2,14 +2,16 @@ pipeline {
     environment {
         WORKSPACE = "${env.WORKSPACE}"
         BUILDID = "${env.BUILD_ID}"
+        GOSS_PATH = "/usr/local/bin/goss"       // Required for running dgoss command in a container
     }
     agent any
     stages {
         stage('Clone repository') { 
             steps { 
                 script{
-                checkout scm                // For testing using pipeline script from SCM
-                //git([url: 'https://github.com/Pratik-Thakkar/mkdocs.git', branch: 'main', credentialsId: 'pratik_prj'])
+                    /* Let's make sure we have the repository cloned to our workspace */
+
+                    checkout scm                 // For testing using pipeline script from SCM
                 }
             }
         }
@@ -17,30 +19,28 @@ pipeline {
         stage('Build docker image') { 
             steps { 
                 script{
-                 dockerImage = docker.build("pthakkar/mkdocs:latest")
+                    /* This builds the actual image; synonymous to docker build on the command line */
+
+                    dockerImage = docker.build("pthakkar/mkdocs:$BUILDID")
                 }
             }
         }
 
         stage('Build site'){
-            agent {
-                docker { 
-                    image 'pthakkar/mkdocs:latest'
-                    args '-t --rm -v ${WORKSPACE}/src/:/docs/src/ -v ${WORKSPACE}/src/site/:/docs/output/ --produce'
-                    reuseNode true 
-                }
+            steps {
+                /* Bulding site documents with mkdocs */
+                
+                sh 'docker run -t --rm -v $WORKSPACE/src/:/docs/src/ -v $WORKSPACE/src/output/:/docs/output/ pthakkar/mkdocs:$BUILDID produce'
             }
-            steps { sh 'mkdocs --version' }
         }
-        stage('Serve site') {
-            agent {
-                docker { 
-                    image 'pthakkar/mkdocs:latest'
-                    args '-t -p 8000:8000 -v ${WORKSPACE}/src/site:/docs/src/ --serve'
-                    reuseNode true 
-                }
+
+        stage('Test site') {     
+            steps {
+                /* Ideally, we would run a test framework against our image.
+                * For this example, we're using a goss -  Quick and Easy server validation) */
+
+                sh '/usr/local/bin/dgoss run -t -p 8000:8000 --name mksite -v $WORKSPACE/src/output/:/docs/src/ pthakkar/mkdocs:$BUILDID serve'
             }
-            steps { sh 'curl -v http://localhost:8000' }
         }
     }
 }
