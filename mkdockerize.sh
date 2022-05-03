@@ -36,17 +36,36 @@ while test $# -gt 0; do
         shift
 
         case "$param" in
-        serve|s)
-            tar -xzf /docs/src/mkdocs.tar.gz -C /docs/src/
-            mkdocs serve --livereload -a "0.0.0.0:8000"
-            exit 0;;
         produce|p)
+            #Build the documentation
             mkdocs build -c -d /docs/src/site
-            cd /docs/src; tar -czf /docs/output/mkdocs.tar.gz /docs/src/site/index.html *
-            exit 0;;
+            
+            #validate if the build directory exists
+            if [[ -d "/docs/src/site" ]]
+            then
+                cp /docs/src/site/index.html /docs/src/
+                cd /docs/src; tar -czf /docs/output/mkdocs.tar.gz *
+            else
+                echo -e "\n Build command failed. \n"
+            fi
+            
+            exit 0
+            ;;
+        serve|s)
+            # validation for tar file and serve the site
+            if [[ -f "mkdocs.tar.gz" ]]
+            then
+                tar -xzf /docs/src/mkdocs.tar.gz -C /docs/src/
+                mkdocs serve --livereload -a "0.0.0.0:8000"
+            else
+                echo -e "\n Please provide valid tar file. \n"
+            fi
+            exit 0
+            ;;
         help|h)
             usage
             exit 0;;
+        
         *)
             echo "Unexpected command: $OPT"
             usage
