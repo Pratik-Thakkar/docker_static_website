@@ -14,14 +14,14 @@ MkDocs is a fast, simple and downright gorgeous static site generator that's gea
 $ docker build . -t pthakkar/mkdocs
 ```
 
-##### Run as a development server in background. Should allow you to view the site on http://localhost:8000
-```
-$ docker run -d -v /path/to/src:/docs/src pthakkar/mkdocs serve
-```
-
 ##### Build the MkDocs documentation and generate a tar file
 ```
 $ docker run -t --rm -v /path/to/src:/docs/src -v /path/to/output:/docs/output pthakkar/mkdocs produce
+```
+
+##### Run as a development server in background. Should allow you to view the site on http://localhost:8000
+```
+$ docker run -d -p 8000:8000 -v /path/to/src:/docs/src pthakkar/mkdocs serve
 ```
 
 ------
