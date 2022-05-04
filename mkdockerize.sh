@@ -37,9 +37,9 @@ while test $# -gt 0; do
 
         case "$param" in
         produce|p)
-            mkdocs build -c -d /docs/src/site                           #Build the documentation
+            mkdocs build -c -d /docs/src/site                           # Build the documentation
             
-            if [[ -d "/docs/src/site" ]]                                #validate if the build directory exists
+            if [[ -d "/docs/src/site" ]]                                # Validate if the build directory exists
             then
                 cp /docs/src/site/index.html /docs/src/
                 cd /docs/src; tar -czf /docs/output/mkdocs.tar.gz *
@@ -50,7 +50,7 @@ while test $# -gt 0; do
             exit 0
             ;;
         serve|s)
-            if [[ -f "mkdocs.tar.gz" ]]                                 # validation for tar file and serve the site
+            if [[ -f "mkdocs.tar.gz" ]]                                 # Validation if tar file exists and serve the site
             then
                 tar -xzf /docs/src/mkdocs.tar.gz -C /docs/src/
                 mkdocs serve --livereload -a "0.0.0.0:8000"
