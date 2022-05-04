@@ -1,8 +1,8 @@
 pipeline {
     environment {
-        WORKSPACE = "${env.WORKSPACE}"
-        BUILDID = "${env.BUILD_ID}"
-        GOSS_PATH = "/usr/local/bin/goss"       // Required for running dgoss command in a container
+        WORKSPACE = "${env.WORKSPACE}"          // Required for mounting source and output folders
+        BUILDID = "${env.BUILD_ID}"             // Required for docker image tag
+        GOSS_PATH = "/usr/local/bin/goss"       // Required for running dgoss command from Jenkins workspace
     }
     agent any
     stages {

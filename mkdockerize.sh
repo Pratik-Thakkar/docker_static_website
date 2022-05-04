@@ -24,7 +24,7 @@ fi
 while test $# -gt 0; do
         param="$1"
         
-        if test "${1::1}" = "-"; then
+        if test "${1::1}" = "-"; then                                   # Added support for single dash and double dashes
                 if test ${#1} -gt 2 -a "${1::2}" = "--" ; then
                         param="${1:2}"
                 else

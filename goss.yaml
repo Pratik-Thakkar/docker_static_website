@@ -1,0 +1,29 @@
+file:
+  /docs/src/index.html:                                                                 # Validate index.html is present in source folder
+    exists: true
+    filetype: file
+  /docs/src/mkdocs.tar.gz:                                                              # Validate tar file present in source folder as per the requirement
+    exists: true
+    filetype: file
+  /docs/src/mkdocs.yml:                                                                 # Validate mkdocs.yaml is present in source folder to serve site
+    exists: true
+    filetype: file
+port:
+  tcp:8000:                                                                             # Validate port 8000 is listing for browser connection
+    listening: true
+    ip:
+    - 0.0.0.0
+command:                                                                                # Validate mkdocs is installed and validate version
+  mkdocs --version:
+    exit-status: 0
+    stdout:
+    - mkdocs, version 1.3.0 from /usr/local/lib/python3.10/site-packages/mkdocs (Python 3.10)
+    stderr: []
+    timeout: 10000
+http:
+  http://localhost:8000:                                                                # Validate site on local browser at port 8000
+    status: 200                                                                         # Success on browser connection to server
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 5000
+    body: [Welcome to MkDocs]                                                           # Validate the webpage message as per the requirement
