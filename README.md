@@ -39,5 +39,6 @@ Goss is a YAML based serverspec alternative tool for validating a server’s con
 
 **Note:** For testing docker containers see the [dgoss](https://github.com/aelsabbahy/goss/tree/master/extras/dgoss) wrapper.
 
-Once installtion is completed create an environment variable [GOSS_FILES_PATH](https://github.com/aelsabbahy/goss/tree/master/extras/dgoss#goss_files_path) specifying goss.yaml path.
+**Note:** Once installtion is completed create an environment variable [GOSS_FILES_PATH](https://github.com/aelsabbahy/goss/tree/master/extras/dgoss#goss_files_path) specifying goss.yaml path.
+
 ------
