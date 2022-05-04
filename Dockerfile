@@ -1,6 +1,6 @@
 FROM python:alpine3.15
 RUN apk add --no-cache \
-      build-base curl wget make bash  \
+      build-base curl wget make bash \
       python3 python3-dev py3-pip                                                 
 
 ## Install the mkdocs system
@@ -10,7 +10,7 @@ RUN pip install mkdocs pygments \
 ## Set working directory for mkdocs
 WORKDIR /docs/src
 
-## Output for mkdocs tar gz
+## Output directory for mkdocs tar file
 VOLUME /docs/output
 
 ## Copy our scripts and make sure they are executable
