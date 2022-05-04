@@ -28,7 +28,7 @@ pipeline {
 
         stage('Build site'){
             steps {
-                /* Bulding site documents with mkdocs */
+                /* Bulding site documents with mkdocs and creating tar file in output folder */
                 
                 sh 'docker run -t --rm -v $WORKSPACE/src/:/docs/src/ -v $WORKSPACE/src/output/:/docs/output/ pthakkar/mkdocs:$BUILDID produce'
             }
@@ -37,7 +37,7 @@ pipeline {
         stage('Test site') {     
             steps {
                 /* Ideally, we would run a test framework against our image.
-                * For this example, we're using a goss -  Quick and Easy server validation) */
+                * For this example, we're using Goss -  Quick and Easy server validation */
 
                 sh '/usr/local/bin/dgoss run -t -p 8000:8000 --name mksite -v $WORKSPACE/src/output/:/docs/src/ pthakkar/mkdocs:$BUILDID serve'
             }
