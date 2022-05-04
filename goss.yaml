@@ -13,7 +13,7 @@ port:
     listening: true
     ip:
     - 0.0.0.0
-command:                                                                                # Validate mkdocs is installed and validate version
+command:                                                                                # Validate mkdocs version installed
   mkdocs --version:
     exit-status: 0
     stdout:
