@@ -41,4 +41,13 @@ Goss is a YAML based serverspec alternative tool for validating a server’s con
 
 **Note:** Once installtion is completed create an environment variable [GOSS_FILES_PATH](https://github.com/aelsabbahy/goss/tree/master/extras/dgoss#goss_files_path) specifying goss.yaml path.
 
+```
+export GOSS_FILES_PATH="/jenkins/workspace/path/"
+```
+
+------
+### Demo
+
+https://user-images.githubusercontent.com/17193500/166871821-4d76b9b4-5740-45ad-9237-4db0ce10e9a4.mp4
+
 ------
